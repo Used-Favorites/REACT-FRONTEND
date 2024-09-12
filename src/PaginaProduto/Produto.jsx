@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Header from '../Components/header';
+import Header from "../Components/Header";
 import './produto.css';
 
-const base_URL = "https://b521-2804-14c-4e6-8051-8e0e-54f-2097-5b1.ngrok-free.app/Product/Products/1";
-
+const base_URL = "https://b521-2804-14c-4e6-8051-8e0e-54f-2097-5b1.ngrok-free.app";
+var ProdutoID =1;
 const Produto = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [productData, setProductData] = useState(null);
@@ -12,7 +12,7 @@ const Produto = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`${base_URL}`, {
+        const response = await axios.get(`${base_URL}/Product/Products/${ProdutoID}`, {
           headers: {
             "ngrok-skip-browser-warning": "any"
           }
@@ -30,22 +30,32 @@ const Produto = () => {
     setIsExpanded(!isExpanded);
   };
 
+  if (!productData) {
+    return <div>Carregando dados do produto...</div>; // Renderização durante o carregamento
+  }
+
   return (
     <div>
       <Header />
 
       <div className="product-image">
-        {/* Display product image here if available */}
-        {productData && <img src={productData.imageURL} alt="Product" />}
-      </div>     
+        {/* Renderizar a imagem se disponível */}
+        {productData.image ? (
+          <img src={productData.imageURL} alt="Product" />
+        ) : (
+          <div>Imagem não disponível</div>
+        )}
+      </div>
 
       <div className="boxMid">
-        <h4>{productData ? productData.title : 'Loading...'}</h4>
-        <p>{productData ? `R$${productData.price} via ` : 'Loading...'} <img src='/src/assets/pix.png' alt="Pix" /></p>
+        <h4>{productData.name}</h4>
+        <p>
+          R${productData.price} via <img src='/src/assets/pix.png' alt="Pix" />
+        </p>
         <div className="cartao">
           <p>Cartão de Crédito</p>
           <p>sem juros</p>
-          <p>3xR$333,03</p>
+          <p>3xR${(productData.price / 3).toFixed(2)}</p>
         </div>
 
         <div className="Card">
@@ -55,9 +65,9 @@ const Produto = () => {
           </div>
           {isExpanded && (
             <div className="card-content">
-              <p><strong>Descrição do produto:</strong> {productData ? productData.description : 'Loading...'}</p>
-              <p><strong>Descrição do problema:</strong> {productData ? productData.problemDescription : 'Loading...'}</p>
-              <p><strong>Descrição do estado de qualidade:</strong> {productData ? productData.qualityDescription : 'Loading...'}</p>
+              <p><strong>Descrição do produto:</strong> {productData.description}</p>
+              <p><strong>Descrição do problema:</strong> {productData.problemDescription}</p>
+              <p><strong>Descrição do estado de qualidade:</strong> {productData.quality}</p>
             </div>
           )}
         </div>

@@ -1,26 +1,61 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    background-color: white; 
-    width: 100%; 
-    position: relative; 
-    z-index: 1;
-  }
-  
-  .right-images {
-    display: flex;
-    gap: 15px;
-  }
-  
-  img {
-    width: 30px; 
-    height: auto;
-  }
-  
-  .logo {
-    width: 40px;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  background-color: white; 
+  width: 100%; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.navbar {
+  width: 100%;
+  background-color: #333;
+  padding: 1rem;
+  position: fixed;
+  top: 0; 
+  z-index: 10;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navbar ul li {
+  display: inline;
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 1rem; 
+}
+
+.navbar ul li a:hover {
+  background-color: #575757;
+  border-radius: 4px;
+}
+
+.main-content {
+  padding-top: 80px; 
+}
+
+.header .navbar .right-images img {
+  width: 30px; 
+  height: auto;
+}
+
+.header .navbar .logo {
+  width: 40px;
+}
