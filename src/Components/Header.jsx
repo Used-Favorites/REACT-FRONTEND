@@ -2,7 +2,6 @@ import React from 'react';
 import './Header.css'; 
 
 import logo from '../assets/uf-logo.jpg'; 
-import coracao from '../assets/contorno-em-forma-de-coracao.png';
 import sacola from '../assets/sacola-de-compras.png';
 import { Link } from 'react-router-dom';
 

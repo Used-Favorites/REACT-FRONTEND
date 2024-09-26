@@ -12,7 +12,7 @@ const PaginaCadastro = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('Enviando os dados: ' + name + ' - ' + email + ' - ' + password + ' - ' + phone);
+    //alert('Enviando os dados: ' + name + ' - ' + email + ' - ' + password + ' - ' + phone);
 
     try {
       const uploadResponse = await axios.post(
@@ -84,10 +84,10 @@ const PaginaCadastro = () => {
             </div>
           </div>
           <div className="BoxEnd">
-            <p>Já tem cadastro? <a href="#">Entre agora</a></p>
+            <p>Já tem cadastro? <a href="/">Entre agora</a></p>
             <label>
               <input type="checkbox" />
-              Li e concordo com os <a href="#">Termos e Condições e a Política de Privacidade</a>
+              Li e concordo com os <a href="/">Termos e Condições e a Política de Privacidade</a>
             </label>
           </div>
           <div className="Button">

@@ -8,6 +8,7 @@ var ProdutoID = 1;
 const Produto = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [productData, setProductData] = useState(null);
+  const [imageBase64, setImageBase64] = useState('');
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -18,6 +19,8 @@ const Produto = () => {
           }
         });
         setProductData(response.data);
+        setImageBase64(response.data.image);
+
       } catch (error) {
         console.error("Error fetching product data:", error);
       }
@@ -40,7 +43,7 @@ const Produto = () => {
 
       <div className="product-image">
         {productData.image ? (
-          <img src={productData.imageURL} alt="Product" />
+          <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Product"/>
         ) : (
           <div>Imagem não disponível</div>
         )}

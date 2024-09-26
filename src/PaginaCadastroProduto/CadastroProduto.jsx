@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './produto.css';
 import axios from 'axios';
 import config from '../config';  
@@ -12,7 +12,29 @@ const CadastroProduto = () => {
   const [descricaoProduto, setDescricaoProduto] = useState('');
   const [descricaoProblema, setDescricaoProblema] = useState('');
   const [estadoQualidade, setEstadoQualidade] = useState('');
+  const [categoriaID, setCategoriaID] = useState(null);
+  const [Categorias, setCategoryData] = useState([]);
+  
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      try {
+        const response = await axios.get(`${config.baseURL}Category/categories`, {
+          headers: {
+            "ngrok-skip-browser-warning": "any"
+          }
+        });
+        setCategoryData(response.data);
+        
 
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    };
+
+    fetchCategoryData();
+  }, []);
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     alert(`Enviando dados do Produto: 
@@ -28,7 +50,7 @@ const CadastroProduto = () => {
 
     try {
       const uploadResponse = await axios.post(
-        `${config.baseURL}/product/create`,  
+        `${config.baseURL}/product/products`,  
         {
           name: nomeProduto,
           price: parseFloat(preco), 
@@ -56,7 +78,11 @@ const CadastroProduto = () => {
       console.error('Erro ao cadastrar o produto:', error);
     }
   };
-
+  
+  const handleCategoriaChange = (e) => {
+    const categoriaId = e.target.value;
+    setCategoriaID(categoriaId);
+  };
   return (
     <div className="container-produto">
       <form onSubmit={handleSubmit}>
@@ -73,6 +99,19 @@ const CadastroProduto = () => {
             onChange={(e) => setNomeProduto(e.target.value)}
           />
         </div>
+
+        <div className="input-group">
+        <label>Categoria</label>
+        <select onChange={handleCategoriaChange} value={categoriaID}>
+          <option value="">Selecione uma categoria</option>
+          {Categorias.map((categoria) => (
+            <option key={categoria.id} value={categoria.id}>
+              {categoria.name}
+            </option>
+          ))}
+        </select>
+        </div>
+
 
         <div className="input-group">
           <label>Preço</label>
