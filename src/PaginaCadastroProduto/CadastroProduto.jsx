@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './produto.css';
+import axios from 'axios';
+import config from '../config';  
 
 const CadastroProduto = () => {
   const [nomeProduto, setNomeProduto] = useState('');
@@ -11,18 +13,48 @@ const CadastroProduto = () => {
   const [descricaoProblema, setDescricaoProblema] = useState('');
   const [estadoQualidade, setEstadoQualidade] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Cadastro de Produto:
-      Nome: ${nomeProduto}
-      Preço: ${preco}
-      Preço Promoção: ${precoPromocao}
-      Produtos Relacionados: ${produtosRelacionados}
-      Link Vendedor: ${linkVendedor}
-      Descrição: ${descricaoProduto}
-      Problemas: ${descricaoProblema}
-      Estado de Qualidade: ${estadoQualidade}
-    `);
+    alert(`Enviando dados do Produto: 
+      Nome: ${nomeProduto}, 
+      Preço: ${preco}, 
+      Preço Promocional: ${precoPromocao}, 
+      Produtos Relacionados: ${produtosRelacionados}, 
+      Link Vendedor: ${linkVendedor}, 
+      Descrição: ${descricaoProduto}, 
+      Problemas: ${descricaoProblema}, 
+      Estado de Qualidade: ${estadoQualidade}`
+    );
+
+    try {
+      const uploadResponse = await axios.post(
+        `${config.baseURL}/product/create`,  
+        {
+          name: nomeProduto,
+          price: parseFloat(preco), 
+          promoPrice: parseFloat(precoPromocao),  
+          relatedProducts: produtosRelacionados,
+          sellerLink: linkVendedor,
+          description: descricaoProduto,
+          problemDescription: descricaoProblema,
+          quality: estadoQualidade,
+        },
+        {
+          headers: {
+            'ngrok-skip-browser-warning': 'any',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (uploadResponse.status === 200) {
+        alert('Produto cadastrado com sucesso');
+      } else {
+        alert('Não foi possível cadastrar o produto');
+      }
+    } catch (error) {
+      console.error('Erro ao cadastrar o produto:', error);
+    }
   };
 
   return (
@@ -43,14 +75,10 @@ const CadastroProduto = () => {
         </div>
 
         <div className="input-group">
-          <label>Espaço para Imagem (Definido, mas não implementado)</label>
-          <div className="image-placeholder">Imagem do Produto</div>
-        </div>
-
-        <div className="input-group">
           <label>Preço</label>
           <input
             type="number"
+            step="0.01"  
             placeholder="Digite o preço"
             onChange={(e) => setPreco(e.target.value)}
           />
@@ -60,6 +88,7 @@ const CadastroProduto = () => {
           <label>Preço em Promoção</label>
           <input
             type="number"
+            step="0.01"  
             placeholder="Digite o preço promocional"
             onChange={(e) => setPrecoPromocao(e.target.value)}
           />
@@ -105,13 +134,6 @@ const CadastroProduto = () => {
             placeholder="Descreva o estado de qualidade do produto"
             onChange={(e) => setEstadoQualidade(e.target.value)}
           ></textarea>
-        </div>
-
-        <div className="input-group">
-          <label>Comentários</label>
-          <div className="comments-section">
-            <p>Área para comentários (a ser implementada)</p>
-          </div>
         </div>
 
         <div className="button-produto">

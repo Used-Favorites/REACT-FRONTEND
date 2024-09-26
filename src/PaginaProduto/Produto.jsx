@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Header from "../Components/Header";
+import config from '../config';
 import './produto.css';
 
-const base_URL = "https://b521-2804-14c-4e6-8051-8e0e-54f-2097-5b1.ngrok-free.app";
-var ProdutoID =1;
+var ProdutoID = 1;
 const Produto = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [productData, setProductData] = useState(null);
@@ -12,7 +12,7 @@ const Produto = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`${base_URL}/Product/Products/${ProdutoID}`, {
+        const response = await axios.get(`${config.baseURL}/Product/Products/${ProdutoID}`, {
           headers: {
             "ngrok-skip-browser-warning": "any"
           }
@@ -31,7 +31,7 @@ const Produto = () => {
   };
 
   if (!productData) {
-    return <div>Carregando dados do produto...</div>; // Renderização durante o carregamento
+    return <div>Carregando dados do produto...</div>; 
   }
 
   return (
@@ -39,7 +39,6 @@ const Produto = () => {
       <Header />
 
       <div className="product-image">
-        {/* Renderizar a imagem se disponível */}
         {productData.image ? (
           <img src={productData.imageURL} alt="Product" />
         ) : (

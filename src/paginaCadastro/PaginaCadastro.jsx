@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { FaUser, FaLock, FaPhone } from 'react-icons/fa';
 import './Cadastro.css';
 import axios from 'axios';
+import config from '../config';  
 
 const PaginaCadastro = () => {
   const [name, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
-  const base_URL = 'https://b521-2804-14c-4e6-8051-8e0e-54f-2097-5b1.ngrok-free.app';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ const PaginaCadastro = () => {
 
     try {
       const uploadResponse = await axios.post(
-        `${base_URL}/user/create`,
+        `${config.baseURL}/user/create`,  
         {
           name: name,
           email: email,
@@ -31,7 +31,7 @@ const PaginaCadastro = () => {
         }
       );
 
-      if (uploadResponse.status === 200) { //Se a resposta do cadastro for positiva
+      if (uploadResponse.status === 200) {
         alert('Cadastrado com sucesso');
       } else {
         alert('Não foi possível cadastrar');
