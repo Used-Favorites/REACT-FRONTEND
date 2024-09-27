@@ -6,6 +6,7 @@ import PaginaCadastro from './paginaCadastro/PaginaCadastro'
 import Produto from './PaginaProduto/Produto'
 import CadastroProduto from './PaginaCadastroProduto/CadastroProduto';
 import Python from './Python';
+import PaginaVitrine from './Vitrine';
 
 function App() {
  
@@ -15,6 +16,7 @@ function App() {
       <Header />
       <div className="main-content">
         <Routes>
+        <Route path="/PaginaVitrine" element={<PaginaVitrine />} />
         <Route path="/paginaCadastro" element={<PaginaCadastro />} />
         <Route path="/paginaProduto" element={<Produto />} />
         <Route path="/paginaCadastroProduto" element={<CadastroProduto />} />

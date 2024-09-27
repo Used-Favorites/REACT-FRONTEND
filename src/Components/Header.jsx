@@ -22,6 +22,9 @@ const Header = () => {
         </div>
         </li>
         <li>
+          <Link to="/paginaVitrine">Vitrine</Link>
+        </li>
+        <li>
           <Link to="/paginaCadastro">Login</Link>
         </li>
         <li>
