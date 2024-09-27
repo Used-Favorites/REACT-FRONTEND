@@ -1,0 +1,55 @@
+.vitrine-container {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+  
+.carrossel {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  position: relative; 
+  width: 100%; 
+  height: 400px; 
+  overflow: hidden; 
+}
+
+    
+.carrossel-imagem {
+  width: 100%;
+  height: 400px; 
+  object-fit: cover;
+  border-radius: 10px;
+  border: 10px solid red; 
+  background-color: lightgray; 
+}
+
+
+
+    .titulo {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+    
+  
+    .grid-imagens {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .grid-item {
+      overflow: hidden;
+    }
+    
+    .produto-imagem {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    .produto-imagem:hover {
+      transform: scale(1.05);
+    }
