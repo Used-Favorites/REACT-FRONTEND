@@ -6,7 +6,7 @@ import sacola from '../assets/sacola-de-compras.png';
 import { Link } from 'react-router-dom';
 
 
-const Header = () => {
+const Header = ({ userName }) => {
   return (
     <div className="header">
      
@@ -25,17 +25,24 @@ const Header = () => {
           <Link to="/paginaVitrine">Vitrine</Link>
         </li>
         <li>
-          <Link to="/paginaCadastro">Login</Link>
+          <Link to="/paginaCadastro">Cadastro</Link>
         </li>
         <li>
-          <Link to="/paginaProduto">Ver Produto</Link>
+          <Link to="/Login">Login</Link>
         </li>
-        <li>
+       {/* <li>
           <Link to="/paginaCadastroProduto">Cadastrar Produto</Link>
-        </li>
+        </li>*/}
         <li>
           <Link to="/Python">YOLO</Link>
         </li>
+        {userName && (
+            <li className="user-name">
+              Bem-vindo, {userName}
+            </li>
+          )}
+
+
       </ul>
     </nav>
     </div>
