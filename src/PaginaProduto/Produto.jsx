@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Header from "../Components/Header";
 import config from '../config';
 import './produto.css';
+import { useParams } from 'react-router-dom'; // Importar useParams
 
-var ProdutoID = 1;
 const Produto = () => {
+  const { id } = useParams();
   const [isExpanded, setIsExpanded] = useState(false);
   const [productData, setProductData] = useState(null);
   const [imageBase64, setImageBase64] = useState('');
@@ -13,7 +14,7 @@ const Produto = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`${config.baseURL}/Product/Products/${ProdutoID}`, {
+        const response = await axios.get(`${config.baseURL}/Product/Products/${id}`, {
           headers: {
             "ngrok-skip-browser-warning": "any"
           }

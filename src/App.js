@@ -18,7 +18,7 @@ function App() {
         <Routes>
         <Route path="/PaginaVitrine" element={<PaginaVitrine />} />
         <Route path="/paginaCadastro" element={<PaginaCadastro />} />
-        <Route path="/paginaProduto" element={<Produto />} />
+        <Route path="/paginaProduto/:id" element={<Produto />} />
         <Route path="/paginaCadastroProduto" element={<CadastroProduto />} />
         <Route path="/Python" element={<Python />} />
       
