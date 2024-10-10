@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
-import axios from "axios"; // Certifique-se de que o axios está sendo importado corretamente
-import { Link } from "react-router-dom"; // Importar Link do react-router-dom
-import "./Vitrine.css"; 
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
-
+import './Vitrine.css';
+import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 import config from '../config';  
+import axios from "axios"; 
+import { Link } from "react-router-dom";
 
 const Vitrine = () => {
+  const carousel = useRef();
+  const [width, setWidth] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [produtosCarregados, setProdutosCarregados] = useState([]);
-
-  var settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    adaptiveHeight: true,
-  };
 
   useEffect(() => {
     const fetchImagesData = async () => {
@@ -39,34 +30,58 @@ const Vitrine = () => {
     fetchImagesData();
   }, []);
 
+
+  useEffect(() => {
+    if (carousel.current) {
+      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+    }
+  }, []);
+
+  const goToPrevious = () => {
+    setCurrentIndex(currentIndex === 0 ? produtosCarregados.length - 1 : currentIndex - 1);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex(currentIndex === produtosCarregados.length - 1 ? 0 : currentIndex + 1);
+  };
+
   return (
-    <div className="vitrine-container">
-      <div className="carrossel">
-        <Slider {...settings}>
-          {produtosCarregados.length > 0 ? (
-            produtosCarregados.slice(0, 5).map((produto) => (
-              <div key={produto.id}>
-                <Link to={`/paginaProduto/${produto.id}`}>
+    <div className="container vitrine-page">
+      <div className="carousel">
+        <button className="nav-button" onClick={goToPrevious}>
+          &#10094; 
+        </button>
+        <motion.div
+          ref={carousel}
+          whileTap={{ cursor: 'grabbing' }}
+          className="inner"
+          drag="x"
+          dragConstraints={{ right: 0, left: -width }}
+          initial={{ x: 0 }}
+          animate={{ x: -currentIndex * carousel.current?.offsetWidth || 0 }} 
+        >
+          {produtosCarregados.map((produto, index) => (
+            <motion.div className="item" key={index}>
+              <Link to={`/paginaProduto/${produto.id}`}>
                   <img 
                     src={`data:image/jpeg;base64,${produto.image}`} 
                     alt={`Produto ${produto.name}`} 
                     className="carrossel-imagem" 
                   />
                 </Link>
-              </div>
-            ))
-          ) : (
-            <p>Carregando imagens...</p>
-          )}
-        </Slider>
+            </motion.div>
+          ))}
+        </motion.div>
+        <button className="nav-button" onClick={goToNext}>
+          &#10095; 
+        </button>
       </div>
 
-      <h2 className="titulo">Perfeito para você</h2>
-
-      <div className="grid-imagens">
-        {produtosCarregados.length > 0 ? (
-          produtosCarregados.slice(0, 8).map((produto) => (
-            <div key={produto.id} className="grid-item">
+      <div className="recommendations">
+        <h3>Perfeitos para Você</h3>
+        <div className="recommendation-grid">
+          {produtosCarregados.map((produto, index) => (
+            <div className="recommendation-item" key={index}>
               <Link to={`/paginaProduto/${produto.id}`}>
                 <img 
                   src={`data:image/jpeg;base64,${produto.image}`} 
@@ -75,10 +90,8 @@ const Vitrine = () => {
                 />
               </Link>
             </div>
-          ))
-        ) : (
-          <p>Carregando produtos...</p> 
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );
