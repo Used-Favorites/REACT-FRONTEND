@@ -3,7 +3,7 @@ import './produto.css';
 import axios from 'axios';
 import config from '../config';  
 
-const CadastroProduto = () => {
+const CadastroProduto = (userID) => {
   const [nomeProduto, setNomeProduto] = useState('');
   const [preco, setPreco] = useState('');
   const [precoPromocao, setPrecoPromocao] = useState('');
@@ -17,6 +17,7 @@ const CadastroProduto = () => {
   const [estadoQualidade, setEstadoQualidade] = useState('');
   const [categoriaID, setCategoriaID] = useState(null);
   const [Categorias, setCategoryData] = useState([]);
+  
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -62,32 +63,27 @@ const CadastroProduto = () => {
   const submitProduct = async (base64Image) => {
     try {
       const uploadResponse = await axios.post(
-        `${config.baseURL}/product/products`,  
+        `${config.baseURL}/product/Products/`,  
         {
-          sellerId: 1, // Trocar pelo ID do usuário cadastrando
-          buyerId: 1,
-          datasheetsId: null,
           name: nomeProduto,
-          price: parseFloat(preco),
-          promoPrice: parseFloat(precoPromocao),  
+          price: parseFloat(preco.replace(',', '.')),
+          promoPrice: parseFloat(precoPromocao.replace(',', '.')),  
           description: descricaoProduto,
           problemDescription: descricaoProblema,
           quality: estadoQualidade,
-          image: base64Image,
-          auditTrailId: null,
-          size: Tamanho,
-          salePrice: parseFloat(preco),
+          image:imagemSalva,
+          size: parseFloat(Tamanho.replace(',', '.')),
+          salePrice: parseFloat(preco.replace(',', '.')),
           repairCost: 0,
-          finalPrice: parseFloat(preco),
+          finalPrice: parseFloat(preco.replace(',', '.')),
           repaired: false,
           lastModified: new Date(),
           interestedParties: 1,
           brand: Marca,
           model: Modelo,
           condition: estadoQualidade,
-          supplierId: 1,
-          cartId: null,
-          categoryId: categoriaID,
+          supplierId: 1
+          
         },
         {
           headers: {
@@ -96,42 +92,52 @@ const CadastroProduto = () => {
           },
         }
       );
-      alert({
-        sellerId: 1,
-        buyerId: 1,
-        datasheetsId: null,
-        name: nomeProduto,
-        price: parseFloat(preco),
-        promoPrice: parseFloat(precoPromocao),
-        description: descricaoProduto,
-        problemDescription: descricaoProblema,
-        quality: estadoQualidade,
-        image: base64Image,
-        auditTrailId: null,
-        size: Tamanho,
-        salePrice: parseFloat(preco),
-        repairCost: 0,
-        finalPrice: parseFloat(preco),
-        repaired: false,
-        lastModified: new Date(),
-        interestedParties: 1,
-        brand: Marca,
-        model: Modelo,
-        condition: estadoQualidade,
-        supplierId: 1,
-        cartId: null,
-        categoryId: categoriaID, // Inclui a categoria
-      });
-      if (uploadResponse.status === 200) {
-        alert('Produto cadastrado com sucesso');
+   
+      if (uploadResponse.status === 201) {
+        
+        
+        updateProduct(uploadResponse.data.id);
         
       } else {
         alert('Não foi possível cadastrar o produto');
       }
     } catch (error) {
-      alert('Erro ao cadastrar o produto: ' + error.message);
+      
+      alert('Erro ao cadastrar o produto :: ' + error.message);
     }
   };
+  const updateProduct = async (idNovo) => {
+    try{
+    const uploadResponse = await axios.put(
+      `${config.baseURL}/product/Products/${idNovo}`,{
+        sellerId: parseInt(userID ? userID:1),
+        categoryId: parseInt(categoriaID)
+       
+      },{
+        headers: {
+          'ngrok-skip-browser-warning': 'any',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (uploadResponse.status === 200) {
+      alert(`Produto ${uploadResponse.data.id} cadastrado com sucesso`);
+      
+    } 
+  } 
+  catch (error) {
+    if (error.response) {
+        console.error('Data:', error.response.data);
+        console.error('Status:', error.response.status);
+        console.error('Headers:', error.response.headers);
+    } else {
+        console.error('Error Message:', error.message);
+    }
+    alert('Erro ao atualizar o produto: ' + error.message);
+}
+  
+  };
+
 
   const handleCategoriaChange = (e) => {
     const categoriaId = e.target.value;

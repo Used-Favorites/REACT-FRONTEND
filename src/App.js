@@ -12,16 +12,18 @@ import PaginaVitrine from './Vitrine';
 import { AuthProvider } from './AuthContext.jsx';
 function App() {
   const [userName, setUserName] = useState(null);
+  const [userID, setUserID] = useState(null);
   const handleLogin = (response) => {
     // Supondo que response.data.name tenha o nome do usuário
     setUserName(response.data.name);
+    setUserID(response.data.id);
   };
    return (
 
 
     <AuthProvider>
       <Router>
-      <Header userName={userName} />
+      <Header userName={userName} userID={userID}  />
         <div className="main-content">
           <Routes>
           <Route path="/" element={<PaginaVitrine />} />
