@@ -56,7 +56,7 @@ const Vitrine = () => {
               </div>
             ))
           ) : (
-            <p>Carregando imagens...</p> // Mensagem temporária ou loader enquanto as imagens carregam
+            <p>Carregando imagens...</p>
           )}
         </Slider>
       </div>
@@ -77,7 +77,7 @@ const Vitrine = () => {
             </div>
           ))
         ) : (
-          <p>Carregando produtos...</p> // Loader enquanto as imagens da grade estão sendo carregadas
+          <p>Carregando produtos...</p> 
         )}
       </div>
     </div>
