@@ -8,6 +8,12 @@ import axios from 'axios';
 import { useAuth } from '../AuthContext.jsx';
 import config from '../config.js';
 import { useNavigate } from 'react-router-dom';
+import './app.css';
+import loginImage from '../assets/login.png.png'; // Certifique-se de que o caminho esteja correto
+
+import { FaFacebook, FaGoogle, FaTwitter } from 'react-icons/fa';
+
+
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -31,8 +37,9 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div className="login-container">
+          <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: '600' }}>Seu melhor espaço aqui!</h1>
+            <img src={loginImage} alt="Logo" className="logo" />
             <form onSubmit={handleLogin}>
                 <input 
                     type="email" 
@@ -43,13 +50,23 @@ const LoginPage = () => {
                 />
                 <input 
                     type="password" 
-                    placeholder="Password" 
+                    placeholder="Senha" 
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
                     required 
                 />
                 <button type="submit">Login</button>
+                <p className="register-text">
+                    Não é registrado? <a href="/register">Registre-se agora</a>
+                </p>
             </form>
+            <hr />
+            <p>Ou continuar com</p>
+            <div className="social-icons">
+                <FaFacebook className="icon" />
+                <FaGoogle className="icon" />
+                <FaTwitter className="icon" />
+            </div>
         </div>
     );
 };
