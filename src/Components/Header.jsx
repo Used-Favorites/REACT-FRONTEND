@@ -63,7 +63,7 @@ const Header = ({userName}) => {
               <Link to="/paginaCadastro">Cadastro</Link>
 			 
 			
-              <Link to="/login">Login</Link>
+              <Link to="/Login">Login</Link>
             </div>
 		   
 																	
