@@ -1,87 +1,70 @@
-import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
-import axios from "axios"; // Certifique-se de que o axios está sendo importado corretamente
-import { Link } from "react-router-dom"; // Importar Link do react-router-dom
-import "./Vitrine.css"; 
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+import './Vitrine.css';
+import { motion } from 'framer-motion';
+import image1 from '../../src/assets/images.png';
+import image2 from '../../src/assets/images.png';
+import image3 from '../../src/assets/images.png';
+import image4 from '../../src/assets/images.png';
+import { useState, useEffect, useRef } from 'react';
 
-import config from '../config';  
+const images = [image1, image2, image3, image4];
 
-const Vitrine = () => {
-  const [produtosCarregados, setProdutosCarregados] = useState([]);
-
-  var settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    adaptiveHeight: true,
-  };
+const PaginaVitrine = () => {
+  const carousel = useRef();
+  const [width, setWidth] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const fetchImagesData = async () => {
-      try {
-        const response = await axios.get(`${config.baseURL}/Product/Products/`, {
-          headers: {
-            "ngrok-skip-browser-warning": "any"
-          }
-        });
-
-        // Atualiza o estado com os produtos, incluindo imagem e id
-        setProdutosCarregados(response.data || []); 
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      }
-    };
-    
-    fetchImagesData();
+    if (carousel.current) {
+      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+    }
   }, []);
 
+  const goToPrevious = () => {
+    setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1);
+  };
+
   return (
-    <div className="vitrine-container">
-      <div className="carrossel">
-        <Slider {...settings}>
-          {produtosCarregados.length > 0 ? (
-            produtosCarregados.slice(0, 5).map((produto) => (
-              <div key={produto.id}>
-                <Link to={`/paginaProduto/${produto.id}`}>
-                  <img 
-                    src={`data:image/jpeg;base64,${produto.image}`} 
-                    alt={`Produto ${produto.name}`} 
-                    className="carrossel-imagem" 
-                  />
-                </Link>
-              </div>
-            ))
-          ) : (
-            <p>Carregando imagens...</p> // Mensagem temporária ou loader enquanto as imagens carregam
-          )}
-        </Slider>
+    <div className="container vitrine-page">
+      <div className="carousel">
+        <button className="nav-button" onClick={goToPrevious}>
+          &#10094; 
+        </button>
+        <motion.div
+          ref={carousel}
+          whileTap={{ cursor: 'grabbing' }}
+          className="inner"
+          drag="x"
+          dragConstraints={{ right: 0, left: -width }}
+          initial={{ x: 0 }}
+          animate={{ x: -currentIndex * carousel.current?.offsetWidth || 0 }} 
+        >
+          {images.map((image, index) => (
+            <motion.div className="item" key={index}>
+              <img src={image} alt={`Imagem ${index + 1}`} />
+            </motion.div>
+          ))}
+        </motion.div>
+        <button className="nav-button" onClick={goToNext}>
+          &#10095; 
+        </button>
       </div>
 
-      <h2 className="titulo">Perfeito para você</h2>
-
-      <div className="grid-imagens">
-        {produtosCarregados.length > 0 ? (
-          produtosCarregados.slice(0, 8).map((produto) => (
-            <div key={produto.id} className="grid-item">
-              <Link to={`/paginaProduto/${produto.id}`}>
-                <img 
-                  src={`data:image/jpeg;base64,${produto.image}`} 
-                  alt={`Produto ${produto.name}`} 
-                  className="produto-imagem" 
-                />
-              </Link>
+      <div className="recommendations">
+        <h3>Perfeitos para Você</h3>
+        <div className="recommendation-grid">
+          {images.map((image, index) => (
+            <div className="recommendation-item" key={index}>
+              <img src={image} alt={`Recomendação ${index + 1}`} />
             </div>
-          ))
-        ) : (
-          <p>Carregando produtos...</p> // Loader enquanto as imagens da grade estão sendo carregadas
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-export default Vitrine;
+export default PaginaVitrine;

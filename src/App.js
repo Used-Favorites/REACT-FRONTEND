@@ -10,6 +10,7 @@ import Python from './Python';
 import LoginPage from './Login/login';
 import PaginaVitrine from './Vitrine';
 import { AuthProvider } from './AuthContext.jsx';
+
 function App() {
   const [userName, setUserName] = useState(null);
   const handleLogin = (response) => {

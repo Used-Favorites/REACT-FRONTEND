@@ -1,53 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Header.css'; 
 
-import logo from '../assets/uf-logo.jpg'; 
+import logo from '../assets/img_logo.png'; 
 import sacola from '../assets/sacola-de-compras.png';
+import userIcon from '../assets/user-icon.png'; 
 import { Link } from 'react-router-dom';
 
+const Header = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
 
-const Header = ({ userName }) => {
+  // Função para alternar o estado do menu suspenso
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    setShowDropdown(prevState => !prevState);
+  };
+  
+  // Fechar o dropdown se o clique for fora dele
+  const handleClickOutside = (e) => {
+    if (!e.target.closest('.user-icon')) {
+      setShowDropdown(false);
+    }
+  };
+
+  // Adiciona evento de clique para fechar o dropdown ao clicar fora dele
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="header">
-     
       <nav className="navbar">
-   
-      <ul>
-        <li>
-        <Link to="/"><img src={logo} alt="Logo" className="logo" /></Link>
-        </li>
-        <li><div className="right-images">
-          
-          <Link to="/carrinho"><img src={sacola} alt="Sacola de compras" /></Link>
-        </div>
-        </li>
-        <li>
-          <Link to="/paginaVitrine">Vitrine</Link>
-        </li>
-        <li>
-          <Link to="/paginaCadastro">Cadastro</Link>
-        </li>
-        <li>
-          <Link to="/Login">Login</Link>
-        </li>
-       {/* <li>
-          <Link to="/paginaCadastroProduto">Cadastrar Produto</Link>
-        </li>*/}
-        <li>
-          <Link to="/Python">YOLO</Link>
-        </li>
-        {userName && (
-            <li className="user-name">
-              Bem-vindo, {userName}
-            </li>
-          )}
-
-
-      </ul>
-    </nav>
+        <ul className="left-menu">
+          <li className="logo-container">
+            <Link to="/"><img src={logo} alt="Logo" className="logo" /></Link>
+          </li>
+          <li>
+            <Link to="/paginaVitrine">HOME</Link>
+          </li>
+          <li>
+            <Link to="/Python">YOLO</Link>
+          </li>
+        </ul>
+  
+        <ul className="right-menu">
+          <li className="right-images">
+            <Link to="/carrinho"><img src={sacola} alt="Sacola de compras" /></Link>
+          </li>
+          <li className="user-icon" onClick={toggleDropdown}>
+            <img src={userIcon} alt="Ícone de Usuário" />
+            <div className={`dropdown-menu ${showDropdown ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
+              <Link to="/paginaCadastro">Cadastro</Link>
+              <Link to="/login">Login</Link>
+            </div>
+          </li>
+        </ul>
+      </nav>
     </div>
-    
   );
-}
+}  
 
 export default Header;

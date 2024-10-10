@@ -12,8 +12,6 @@ const PaginaCadastro = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //alert('Enviando os dados: ' + name + ' - ' + email + ' - ' + password + ' - ' + phone);
-
     try {
       const uploadResponse = await axios.post(
         `${config.baseURL}/user/create`,  
@@ -44,44 +42,44 @@ const PaginaCadastro = () => {
   return (
     <div>
       <div className="container">
+        <div className="image-container"></div>
+        
         <form onSubmit={handleSubmit}>
-          <div>
-            <div className="Input-Nome">
-              <label>Nome</label>
-              <input
-                type="text"
-                placeholder="Digite seu nome"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <FaUser className="icon" />
-            </div>
-            <div className="Input-Phone">
-              <label>Telefone</label>
-              <input
-                type="phone"
-                placeholder="Digite seu telefone"
-                onChange={(e) => setPhone(e.target.value)}
-              />
-              <FaPhone className="icon" />
-            </div>
-            <div className="Input-Email">
-              <label>Endereço de email</label>
-              <input
-                type="email"
-                placeholder="Digite seu email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <FaUser className="icon" />
-            </div>
-            <div className="Input-Senha">
-              <label>Senha</label>
-              <input
-                type="password"
-                placeholder="Crie uma senha"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <FaLock className="icon" />
-            </div>
+          <div className="Input-Nome">
+            <label>Nome</label>
+            <input
+              type="text"
+              placeholder="Digite seu nome"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <FaUser className="icon" />
+          </div>
+          <div className="Input-Phone">
+            <label>Telefone</label>
+            <input
+              type="phone"
+              placeholder="Digite seu telefone"
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            <FaPhone className="icon" />
+          </div>
+          <div className="Input-Email">
+            <label>Endereço de email</label>
+            <input
+              type="email"
+              placeholder="Digite seu email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <FaUser className="icon" />
+          </div>
+          <div className="Input-Senha">
+            <label>Senha</label>
+            <input
+              type="password"
+              placeholder="Crie uma senha"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FaLock className="icon" />
           </div>
           <div className="BoxEnd">
             <p>Já tem cadastro? <a href="/">Entre agora</a></p>
