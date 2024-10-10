@@ -9,10 +9,11 @@ import { useAuth } from '../AuthContext.jsx';
 import config from '../config.js';
 import { useNavigate } from 'react-router-dom';
 import './app.css';
-import loginImage from '../assets/login.png.png'; // Certifique-se de que o caminho esteja correto
-
-import { FaFacebook, FaGoogle, FaTwitter } from 'react-icons/fa';
-
+import loginImage from '../assets/login.png.png'; 
+//import { FaFacebook, FaGoogle, FaTwitter } from 'react-icons/fa';
+import iconapple from '../assets/iconapple.png';
+import icongoogle from '../assets/iconface.png';
+import iconface from '../assets/icongoogle.png';
 
 
 const LoginPage = () => {
@@ -60,12 +61,12 @@ const LoginPage = () => {
                     Não é registrado? <a href="/register">Registre-se agora</a>
                 </p>
             </form>
-            <hr />
+            <hr /> {/* Linha horizontal */}
             <p>Ou continuar com</p>
             <div className="social-icons">
-                <FaFacebook className="icon" />
-                <FaGoogle className="icon" />
-                <FaTwitter className="icon" />
+                <img src={iconapple } alt="Logo" className="apple-icon"/>
+                <img src={icongoogle}  alt="Logo" className="google-icon"/>
+                <img src={iconface} alt="Logo" className="facebook-icon" />
             </div>
         </div>
     );
