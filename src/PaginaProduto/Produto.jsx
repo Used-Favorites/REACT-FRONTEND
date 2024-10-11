@@ -6,6 +6,7 @@ import './produto.css';
 import { useParams } from 'react-router-dom'; // Importar useParams
 
 const Produto = () => {
+  var userID=3;
   const { id } = useParams();
   const [isExpanded, setIsExpanded] = useState(false);
   const [productData, setProductData] = useState(null);
@@ -29,6 +30,24 @@ const Produto = () => {
 
     fetchProductData();
   }, []);
+  const handleUpdate = async (productIds) => {
+    try {
+      await axios.put(`${config.baseURL}/cart/Carts/${userID}`, {
+        productIds: Array.isArray(productIds) ? productIds : [productIds] // O payload com os IDs dos produtos
+      }, {
+        headers: {
+          "ngrok-skip-browser-warning": "any"
+        }
+      });
+  
+      alert("Produto(s) adicionado(s) com sucesso!");
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro ao atualizar produto(s):", error);
+    }
+  };
+
+
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -76,7 +95,7 @@ const Produto = () => {
         </div>
       </div>
 
-      <button>Comprar</button>
+      <button onClick={() => handleUpdate(productData.id)}>Comprar</button>
 
       <div className="BoxEnd">
         <h4>APROVEITE E COMPRE JUNTO</h4>

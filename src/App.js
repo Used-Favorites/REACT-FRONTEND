@@ -10,6 +10,7 @@ import Python from './Python';
 import LoginPage from './Login/login';
 import PaginaVitrine from './Vitrine';
 import { AuthProvider } from './AuthContext.jsx';
+import Carrinho from './cart/cart.jsx';
 function App() {
   const [userName, setUserName] = useState(null);
   const [userID, setUserID] = useState(null);
@@ -33,6 +34,7 @@ function App() {
           <Route path="/paginaProduto/:id" element={<Produto />} />
           <Route path="/paginaCadastroProduto" element={<CadastroProduto />} />
           <Route path="/Python" element={<Python />} />
+          <Route path="/Cart" element={<Carrinho />} />
         
           </Routes>
         </div>

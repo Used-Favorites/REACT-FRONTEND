@@ -53,7 +53,7 @@ const Header = ({userName}) => {
         <ul className="right-menu">
           <li className="right-images">
 		  
-            <Link to="/carrinho"><img src={sacola} alt="Sacola de compras" /></Link>
+            <Link to="/Cart"><img src={sacola} alt="Sacola de compras" /></Link>
 			  
           </li>
           <li className="user-icon" onClick={toggleDropdown}>
