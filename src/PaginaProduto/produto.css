@@ -16,7 +16,6 @@ div {
 .product-image {
   width: 100%;
   height: 400px;
-  background-image: url('/src/assets/images.png');
   background-position: center;
   background-repeat: no-repeat;
   margin-top: 20px;

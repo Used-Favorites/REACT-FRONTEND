@@ -7,15 +7,23 @@
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "axios": "^1.7.7",
+<<<<<<< HEAD
     "firebase": "^11.0.2",
+=======
+    "framer-motion": "^11.11.7",
+>>>>>>> 8018b64c168a9853775b2ffbe141239424acf28c
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.30.2",
+    "slick": "^1.12.2",
+    "slick-carousel": "^1.8.1",
     "web-vitals": "^4.2.3"
   },
   "scripts": {
+    "dev": "react-scripts start",
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
