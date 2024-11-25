@@ -1,0 +1,48 @@
+.tabelaCarrinho {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .tabelaCarrinho th, .tabelaCarrinho td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .tabelaCarrinho img {
+    max-width: 50px;
+    height: auto;
+  }
+  
+  .descCarrinho, .probCarrinho {
+    max-width: 200px;
+    word-wrap: break-word;
+  }
+  
+  .freteCupomSection {
+    margin: 20px 0;
+  }
+  
+  .freteCupomSection input {
+    margin-right: 10px;
+    padding: 5px;
+  }
+  
+  .freteCupomSection button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .freteCupomSection button:hover {
+    background-color: #45a049;
+  }
+  
+  .totalSection {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  

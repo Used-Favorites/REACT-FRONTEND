@@ -6,6 +6,7 @@ const Python = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [imageBase64, setImageBase64] = useState('');
     const [imageOldBase64, setOldImageBase64] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
   
     const handleFileChange = (event) => {
       setSelectedFile(event.target.files[0]);
@@ -16,10 +17,12 @@ const Python = () => {
         const reader = new FileReader();
         reader.onloadend = async () => {
           const base64String = reader.result.split(',')[1];
-          const base_URL = "https://bfe8-34-90-201-50.ngrok-free.app/";
-  
+          const base_URL = "https://397f-35-204-246-209.ngrok-free.app";
+    
           try {
-              setOldImageBase64(base64String);
+            setOldImageBase64(base64String);
+            setIsLoading(true); // Inicia o carregamento
+    
             // Envia a imagem em base64 para o Flask
             const uploadResponse = await axios.post(`${base_URL}/upload_image`, {
               image_base64: base64String
@@ -29,26 +32,26 @@ const Python = () => {
                 "Content-Type": "application/json"
               }
             });
-  
-          
-  
-            // Chama a pagina de resultado(Na qual executa o YOLO de Detecção)
+    
             if (uploadResponse.status === 200) {
-                  const response = await axios.get(`${base_URL}/get_image_json`, {
+              // Chama a API para obter a imagem processada
+              const response = await axios.get(`${base_URL}/get_image_json`, {
                 headers: {
                   "ngrok-skip-browser-warning": "any"
                 }
               });
-  
+    
               setImageBase64(response.data.image_base64);
             } else {
-              console.error("Falha de receber a imagem da API.");
+              console.error("Falha ao receber a imagem da API.");
             }
           } catch (error) {
             console.error('Erro:', error);
+          } finally {
+            setIsLoading(false); // Finaliza o carregamento
           }
         };
-  
+    
         reader.readAsDataURL(selectedFile);
       } else {
         alert('Por favor, selecione um arquivo primeiro.');
@@ -57,29 +60,65 @@ const Python = () => {
 
 
     return (
+      <div className="YOLO">
+        <h1>Uploader</h1>
+        <input type="file" accept="image/jpeg" onChange={handleFileChange} />
+        <button onClick={handleUpload}>Enviar Imagem</button>
+
+        <div className="images-container">
+        {imageOldBase64 && (
         <div>
-    <h1>Uploader</h1>
-    <input type="file" accept="image/jpeg" onChange={handleFileChange} />
-    <button onClick={handleUpload}>Enviar Imagem</button>
-    
-    {imageOldBase64 && (
-      
-      <div>
         <h2>Imagem agora:</h2>
-        <img src={`data:image/jpeg;base64,${imageOldBase64}`} alt="Imagem agora" width="50%" height="40%" />
-       
-      </div>
-    )}  
-    {imageBase64 && (
-      
-      <div>
+        <img src={`data:image/jpeg;base64,${imageOldBase64}`} alt="Imagem agora" />
+        </div>
+        )}
+        {isLoading && <p>Carregando a imagem processada...</p>}
+        {imageBase64 && !isLoading && (
+        <div>
         <h2>Imagem pós YOLO:</h2>
-        <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Imagem processada" width="50%" height="40%" />
-       
+        <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Imagem processada" />
+        </div>
+        )}
+        </div>
+        <div className="classification-table">
+        <h2>Classificações de Problemas: O nome do problema encontrado pela IA e a % que o algoritmo achou que aquilo era</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Tradução</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>missing_hole</td>
+              <td>Furo ausente</td>
+            </tr>
+            <tr>
+              <td>mouse_bite</td>
+              <td>Mordida de rato</td>
+            </tr>
+            <tr>
+              <td>open_circuit</td>
+              <td>Circuito aberto</td>
+            </tr>
+            <tr>
+              <td>short</td>
+              <td>Curto-circuito</td>
+            </tr>
+            <tr>
+              <td>spur</td>
+              <td>Esporão</td>
+            </tr>
+            <tr>
+              <td>spurious_copper</td>
+              <td>Cobre espúrio</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    )}
-  </div>
-);
+      </div>
+    );
 }
 
 

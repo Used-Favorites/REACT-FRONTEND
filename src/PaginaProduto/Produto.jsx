@@ -1,11 +1,15 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef  } from 'react';
+
 import Header from "../Components/Header";
 import config from '../config';
 import './produto.css';
+import { useParams } from 'react-router-dom'; // Importar useParams
 
-var ProdutoID = 1;
-const Produto = () => {
+const Produto = ({userID}) => {
+  const userIdString = String(userID);
+  console.log("Comprando como:"+userIdString);
+  const { id } = useParams();
   const [isExpanded, setIsExpanded] = useState(false);
   const [productData, setProductData] = useState(null);
   const [imageBase64, setImageBase64] = useState('');
@@ -13,7 +17,7 @@ const Produto = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`${config.baseURL}/Product/Products/${ProdutoID}`, {
+        const response = await axios.get(`${config.baseURL}/Product/Products/${id}`, {
           headers: {
             "ngrok-skip-browser-warning": "any"
           }
@@ -28,6 +32,24 @@ const Produto = () => {
 
     fetchProductData();
   }, []);
+  const handleUpdate = async (productIds) => {
+    try {
+      await axios.put(`${config.baseURL}/cart/Carts/${userIdString}`, {
+        productIds: Array.isArray(productIds) ? productIds : [productIds] // O payload com os IDs dos produtos
+      }, {
+        headers: {
+          "ngrok-skip-browser-warning": "any"
+        }
+      });
+  
+      alert("Produto(s) adicionado(s) com sucesso!");
+      //window.location.reload();
+    } catch (error) {
+      console.error("Erro ao atualizar produto(s):", error);
+    }
+  };
+
+
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -75,7 +97,7 @@ const Produto = () => {
         </div>
       </div>
 
-      <button>Comprar</button>
+      <button onClick={() => handleUpdate(productData.id)}>Comprar</button>
 
       <div className="BoxEnd">
         <h4>APROVEITE E COMPRE JUNTO</h4>

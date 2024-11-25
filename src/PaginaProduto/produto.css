@@ -12,14 +12,16 @@ div {
   box-sizing: border-box;
 }
 
-
 .product-image {
-  width: 100%;
-  height: 400px;
-  background-image: url('/src/assets/images.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-top: 20px;
+  width: auto; /* O container se ajusta automaticamente */
+  max-width: 150px; /* Máximo permitido */
+  margin: 90px auto; /* Centraliza horizontalmente */
+}
+.product-image img {
+  max-width: 100%; /* Limita a largura para caber no container */
+  height: auto;    /* Ajusta a altura proporcionalmente */
+  display: block;  /* Garante que a imagem fique alinhada no centro */
+  margin: 0 auto;  /* Centraliza horizontalmente */
 }
 
 .boxMid {

@@ -1,121 +1,84 @@
-body {
-    font-family: Roboto, sans-serif; 
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
 .container {
-    background-color: white;
-    padding: 30px;
-    width: 800px; 
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    margin-top: 120px;
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto; 
 }
 
-.header {
-    text-align: center;
-}
-
-.header img {
-    max-width: 100%;
+.image img {
+    width: 100%;
+    max-width: 400px; 
     height: auto;
-    border-radius: 10px;
-    margin-bottom: 20px;
 }
 
-.header h1 {
-    font-size: 24px;
-    color: #333;
-    margin: 0;
-}
-
-.header p {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 30px;
-}
-
-.form-group {
-    margin-bottom: 20px;
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 label {
     font-size: 16px;
     color: #333;
     margin-bottom: 5px;
-    display: block;
-    margin-top: 10px;
+}
+
+.input-container {
+    position: relative; /* Cria um contexto para o ícone */
 }
 
 input {
     width: 100%;
-    padding: 9px;
+    padding: 10px 40px 10px 10px; /* Adiciona espaço à direita para o ícone */
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
-
 .icon {
-    position: absolute;
-    margin-left: -25px;
-    margin-top: 15px;
+    position: absolute; /* Posiciona o ícone dentro do contêiner do input */
+    right: 10px; /* Distância do lado direito */
+    top: 50%; /* Centraliza verticalmente */
+    transform: translateY(-50%); /* Ajusta a posição vertical */
     color: #666;
 }
 
-.checkbox {
-    margin-bottom: 20px;
-}
-
-.checkbox label {
-    font-size: 14px;
-}
-
-.checkbox input[type='checkbox'] {
-    margin-right: 5px;
-}
-
 .button {
-    display: block;
-    width: 100%;
-    padding: 12px;
+    width: fit-content;
+    padding: 12px 30px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
-    font-size:   
- 18px;
+    font-size: 18px;
     cursor: pointer;
+    align-self: center; /* Centraliza o botão */
     transition: background-color 0.3s ease;
 }
 
 .button:hover {
-    background-color:   
- #0056b6;
+    background-color: #0056b6;
 }
 
-.footer {
-    text-align: center;
-    margin-top: 30px;
+.BoxEnd {
+    text-align: center; /* Centraliza o texto */
+    font-size: 14px;
 }
 
-.footer a {
+.BoxEnd a {
     color: #007BFF;
     text-decoration: none;
 }
 
-.footer a:hover {
+.BoxEnd a:hover {
     text-decoration: underline;
 }
 
 @media (max-width: 768px) {
     .container {
-        width: 90%;
+        padding: 10px;
+    }
+    .image img {
+        max-width: 300px;
     }
 }

@@ -1,0 +1,92 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 900px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.vitrine-page {
+  padding-top: 300px; /* Espaço extra para empurrar o carrossel para baixo */
+}
+
+.carousel {
+  cursor: grab;
+  overflow: hidden;
+  position: relative;
+}
+
+.inner {
+  display: flex;
+  width: 100%; /* Garante que o container ocupe toda a largura disponível */
+}
+
+.item {
+  min-width: 100%; /* Cada item ocupará 100% da largura do container */
+  padding: 14px;
+}
+
+.item img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  pointer-events: none;
+  transition: transform 0.3s;
+}
+
+.item:hover img {
+  transform: scale(1.05);
+}
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+}
+
+.nav-button:first-of-type {
+  left: 10px;
+}
+
+.nav-button:last-of-type {
+  right: 10px;
+}
+
+/* CSS para a seção de recomendações */
+.recommendations {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.recommendation-item {
+  padding: 10px;
+}
+
+.recommendation-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
