@@ -10,6 +10,8 @@ import Python from './Python';
 import LoginPage from './Login/login';
 import PaginaVitrine from './Vitrine';
 import { AuthProvider } from './AuthContext.jsx';
+import Chat from './Chat/Chat';
+
 function App() {
   const [userName, setUserName] = useState(null);
   const [userID, setUserID] = useState(null);
@@ -33,7 +35,9 @@ function App() {
           <Route path="/paginaProduto/:id" element={<Produto />} />
           <Route path="/paginaCadastroProduto" element={<CadastroProduto />} />
           <Route path="/Python" element={<Python />} />
-        
+          <Routes>
+  <Route path="/chat" element={<Chat />} />
+</Routes>
           </Routes>
         </div>
       </Router>

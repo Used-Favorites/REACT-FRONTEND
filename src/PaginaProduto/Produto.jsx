@@ -28,7 +28,7 @@ const Produto = () => {
     };
 
     fetchProductData();
-  }, []);
+  }, [id]);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
