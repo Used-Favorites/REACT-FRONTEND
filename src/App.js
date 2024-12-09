@@ -7,11 +7,19 @@ import PaginaCadastro from './paginaCadastro/PaginaCadastro'
 import Produto from './PaginaProduto/Produto'
 import CadastroProduto from './PaginaCadastroProduto/CadastroProduto';
 import Python from './Python';
+<<<<<<< HEAD
+import Chat from './Components/Chat';
+
+=======
 import LoginPage from './Login/login';
 import PaginaVitrine from './Vitrine';
 import { AuthProvider } from './AuthContext.jsx';
+<<<<<<< HEAD
 import Chat from './Chat/Chat';
 
+=======
+>>>>>>> 8018b64c168a9853775b2ffbe141239424acf28c
+>>>>>>> d7512bf5d1c374ec0d75b71e5a92d482c8905876
 function App() {
   const [userName, setUserName] = useState(null);
   const [userID, setUserID] = useState(null);
@@ -21,6 +29,20 @@ function App() {
     setUserID(response.data.id);
   };
    return (
+<<<<<<< HEAD
+    <Router>
+      <Header />
+      <div className="main-content">
+        <Routes>
+        <Route path="/paginaCadastro" element={<PaginaCadastro />} />
+        <Route path="/paginaProduto" element={<Produto />} />
+        <Route path="/paginaCadastroProduto" element={<CadastroProduto />} />
+        <Route path="/Python" element={<Python />} />
+        <Route path="/chat" element={<Chat />} /> 
+        </Routes>
+      </div>
+    </Router>
+=======
 
 
     <AuthProvider>
@@ -42,6 +64,7 @@ function App() {
         </div>
       </Router>
     </AuthProvider> 
+>>>>>>> 8018b64c168a9853775b2ffbe141239424acf28c
   );
 }
 
